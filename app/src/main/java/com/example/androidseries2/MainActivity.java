@@ -225,6 +225,7 @@ public class MainActivity extends AppCompatActivity {
     private Bitmap bitt(Bitmap img) {
         return img.copy(Bitmap.Config.ARGB_8888,true);
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if ((data != null) && requestCode == PICK_PHOTO_CODE) {
@@ -232,15 +233,16 @@ public class MainActivity extends AppCompatActivity {
 
             // Load the image located at photoUri into selectedImage
             Bitmap selectedImage = loadFromUri(photoUri);
-            //Log.w("CEKIT", photoUri.toString()+".jpg");
-            //Mat src = new Mat (selectedImage.getWidth(), selectedImage.getHeight(), CvType.CV_8UC1);
+
+
             Mat mat = new Mat (selectedImage.getWidth(), selectedImage.getHeight(), CvType.CV_8U);
 
+            //convert bitmap to mat
             Utils.bitmapToMat(bitt(selectedImage), mat);
-           //Mat src = Imgcodecs.imread(photoUri.toString()+".jpg");
 
 
             Utils.matToBitmap(YoloProg(mat),selectedImage);
+
             // Load the selected image into a preview
             ImageView ivPreview = (ImageView) findViewById(R.id.ivPreview);
             ivPreview.setImageBitmap(selectedImage);
@@ -268,34 +270,5 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-/*
-    public class ConvertInBackground extends AsyncTask<Void,Void,Void> {
-
-        @Override
-        protected Void doInBackground(Void... params) {
-
-            //Create new OpenCV variable with the same width and height of the bitmap variable
-
-            //Convert the Bitmap to Mat
-            Utils.bitmapToMat(bitmap, mat);
-
-            //Convert image to gray scale
-            Imgproc.cvtColor(mat, mat, Imgproc.COLOR_RGB2GRAY);
-
-            //Return the image from mat to Bitmap after convert it to gray scale using OpenCV libs
-            Utils.matToBitmap(mat, bitmap);
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-
-            //Update the imageView with the new gray scale image
-            imageView.setImageBitmap(bitmap);
-
-        }
-    }
-*/
 
 }
