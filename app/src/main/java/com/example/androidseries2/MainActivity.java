@@ -240,12 +240,12 @@ public class MainActivity extends AppCompatActivity {
             //convert bitmap to mat
             Utils.bitmapToMat(bitt(selectedImage), mat);
 
-
-            Utils.matToBitmap(YoloProg(mat),selectedImage);
+            Bitmap resultBitmap = Bitmap.createBitmap(mat.cols(),  mat.rows(),Bitmap.Config.ARGB_8888);
+            Utils.matToBitmap(YoloProg(mat),resultBitmap);
 
             // Load the selected image into a preview
             ImageView ivPreview = (ImageView) findViewById(R.id.ivPreview);
-            ivPreview.setImageBitmap(selectedImage);
+            ivPreview.setImageBitmap(resultBitmap);
         }
     }
 
